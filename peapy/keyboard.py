@@ -155,7 +155,10 @@ VALID_KEYS = (
 
 def is_pressed(key):
     """
-    Check if a key is pessed. Valid keys: 
+    Check if a key is pessed. Valid keys: https://raw.githubusercontent.com/Genius1512/peapy/main/peapy/valid_keys.txt?token=GHSAT0AAAAAABQ6OHUD4JFLY4I2SHTWQGUWYSOWJHQ
+    
+    Args:
+        key (str): The key to check
     """
     if key not in VALID_KEYS:
         raise ValueError("Invalid key: {}".format(key))
@@ -163,6 +166,9 @@ def is_pressed(key):
 
 
 def get_pressed_keys():
+    """
+    Get all supported keys that are currently pressed
+    """
     keys = []
     for key in VALID_KEYS:
         if is_pressed(key):

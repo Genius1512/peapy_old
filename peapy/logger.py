@@ -3,11 +3,24 @@ from rich import print
 
 
 class Logger:
+    """
+    Logger class
+    """
     def __init__(self, name: str, file_path: str = "stdout"):
+        """
+        Construct a logger
+
+        Args:
+            name (str): Name of the logger
+            file_path (str): Path to the log file. If "stdout", log to stdout
+        """
         self.name = name
         self.file_path = file_path
 
     def info(self, *objects):
+        """
+        Print an info message. White text.
+        """
         out = self.__get_log_string(*objects, level="INFO")
         if self.file_path == "stdout":
             print(f"[white]{out}")
@@ -16,6 +29,9 @@ class Logger:
                 f.write(out + "\n")
 
     def warning(self, *objects):
+        """
+        Print a warning message. Yellow text.
+        """
         out = self.__get_log_string(*objects, level="WARNING")
         if self.file_path == "stdout":
             print(f"[yellow]{out}")
@@ -24,6 +40,9 @@ class Logger:
                 f.write(out + "\n")
 
     def error(self, *objects):
+        """
+        Print an error message. Red text.
+        """
         out = self.__get_log_string(*objects, level="ERROR")
         if self.file_path == "stdout":
             print(f"[red]{out}")
