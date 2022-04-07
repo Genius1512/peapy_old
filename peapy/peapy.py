@@ -27,7 +27,7 @@ class PeaPy:
 
     def get_objects(self) -> dict[str, Object]:
         return self.__objects
-    
+
     def remove_object(self, name: str):
         if name not in self.__objects:
             raise exceptions.ObjectNotFoundException(name)
@@ -50,3 +50,11 @@ class PeaPy:
 
     def __repr__(self):
         return "peapy.PeaPy()"
+
+
+def print_peapy_tree(game: PeaPy):
+    print("PeaPy:")
+    for obj in game.get_objects().values():
+        print("\t" + obj.name + ":")
+        for comp in obj.get_components().values():
+            print("\t\t" + comp.NAME)
