@@ -5,6 +5,7 @@ class Component:
     """
     Component class
     """
+
     NAME = "Component"
 
     def __init__(self):

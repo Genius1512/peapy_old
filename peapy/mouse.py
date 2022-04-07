@@ -1,11 +1,7 @@
 import mouse
 
 
-VALID_BUTTONS = [
-    "left",
-    "middle",
-    "right"
-]
+VALID_BUTTONS = ["left", "middle", "right"]
 
 
 def is_pressed(button):

@@ -1,3 +1,4 @@
+from .config import Config, get_default_config
 from . import exceptions
 from .logger import Logger
 from .objects import Object
@@ -8,7 +9,8 @@ class PeaPy:
     """
     Main PeaPy class
     """
-    def __init__(self, config: dict):
+
+    def __init__(self, config: Config = get_default_config()):
         """
         Construct a PeaPy object
 
@@ -16,15 +18,13 @@ class PeaPy:
             config (dict): The config
         """
         self.config = config
-        self.logger = Logger(
-            self.config["LOGGER"]["name"], self.config["LOGGER"]["default_path"]
-        )
+        self.logger = Logger(self.config.logger.name, self.config.logger.default_path)
 
         pygame.init()
         self.screen = pygame.display.set_mode(
-            (config["WINDOW"]["width"], config["WINDOW"]["height"])
+            (self.config.window.width, self.config.window.height)
         )
-        pygame.display.set_caption(config["WINDOW"]["caption"])
+        pygame.display.set_caption(self.config.window.caption)
         self.clock = pygame.time.Clock()
 
         self.__objects: dict[str, Object] = {}
@@ -89,8 +89,8 @@ class PeaPy:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
-        self.delta = self.clock.tick(60) / 1000
-        self.screen.fill(self.config["WINDOW"]["background"])
+        self.delta = self.clock.tick(self.config.stats.max_fps) / 1000
+        self.screen.fill(self.config.window.background)
 
         for obj in self.__objects.values():
             self = obj.update(self)

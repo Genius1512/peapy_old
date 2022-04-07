@@ -6,6 +6,7 @@ class Logger:
     """
     Logger class
     """
+
     def __init__(self, name: str, file_path: str = "stdout"):
         """
         Construct a logger

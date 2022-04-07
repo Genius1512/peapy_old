@@ -156,7 +156,7 @@ VALID_KEYS = (
 def is_pressed(key):
     """
     Check if a key is pessed. Valid keys: https://raw.githubusercontent.com/Genius1512/peapy/main/peapy/valid_keys.txt?token=GHSAT0AAAAAABQ6OHUD4JFLY4I2SHTWQGUWYSOWJHQ
-    
+
     Args:
         key (str): The key to check
     """
