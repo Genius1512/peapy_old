@@ -154,6 +154,9 @@ VALID_KEYS = (
 
 
 def is_pressed(key):
+    """
+    Check if a key is pessed. Valid keys: 
+    """
     if key not in VALID_KEYS:
         raise ValueError("Invalid key: {}".format(key))
     return keyboard.is_pressed(key)
