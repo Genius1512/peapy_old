@@ -1,3 +1,4 @@
+from .objects import Object
 from .__pygame import pygame
 
 
@@ -8,6 +9,8 @@ class PeaPy:
         pygame.display.set_caption("PeaPy")
         self.clock = pygame.time.Clock()
 
+        self.__objects: dict[str, Object] = {}
+
     def update(self) -> bool:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -15,7 +18,8 @@ class PeaPy:
         self.delta = self.clock.tick(60) / 1000
         self.screen.fill((255, 255, 255))
 
-        # Update objects
+        for obj in self.__objects.values():
+            self = obj.update(self)
 
         pygame.display.update()
         return True
