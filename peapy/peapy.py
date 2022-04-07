@@ -98,6 +98,9 @@ class PeaPy:
         pygame.display.update()
         return True
 
+    def __getitem__(self, key: str) -> Object:
+        return self.get_object(key)
+
     def __repr__(self):
         return "peapy.PeaPy()"
 

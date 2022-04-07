@@ -1,4 +1,4 @@
-from .components import Component
+from .component import Component
 from . import exceptions
 from .interfaces import PeaPy
 
@@ -108,6 +108,9 @@ class Object:
         # Quit object
 
         return self.peapy
+
+    def __getitem__(self, key: str) -> Component:
+        return self.get_component(key)
 
     def __repr__(self):
         return f"peapy.objects.{self.__class__.__name__}({self.name})"

@@ -12,7 +12,9 @@
             "console": "externalTerminal",
             "justMyCode": true,
             "preLaunchTask": "preRun",
-            "python": "/usr/bin/python3.10",
+            "linux": {
+                "python": "/usr/bin/python3.10",
+            }
         }
     ]
 }
