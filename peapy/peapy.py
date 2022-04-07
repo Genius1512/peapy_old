@@ -1,7 +1,7 @@
 from .config import Config, get_default_config
 from . import exceptions
 from .logger import Logger
-from .objects import Object
+from .object import Object
 from .__pygame import pygame
 
 
@@ -90,6 +90,7 @@ class PeaPy:
             if event.type == pygame.QUIT:
                 return False
         self.delta = self.clock.tick(self.config.stats.max_fps) / 1000
+        self.fps = self.clock.get_fps()
         self.screen.fill(self.config.window.background)
 
         for obj in self.__objects.values():
@@ -97,6 +98,9 @@ class PeaPy:
 
         pygame.display.update()
         return True
+
+    def __getitem__(self, key: str) -> Object:
+        return self.get_object(key)
 
     def __repr__(self):
         return "peapy.PeaPy()"

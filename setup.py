@@ -2,18 +2,11 @@ import os
 import setuptools
 
 
-requirements = (
-    open(os.path.join(os.path.dirname(__file__), "requirements.txt"), "r")
-    .read()
-    .split("\n")
-)
-
-
 setuptools.setup(
     name="peapy",
-    version="0.0.3",
+    version="0.2.3",
     author="Silvan Schmidt",
     description="A python game engine",
-    install_requires=requirements,
+    install_requires=["pygame", "rich", "mouse", "keyboard"],
     packages=["peapy"],
 )
