@@ -1,3 +1,4 @@
+from . import exceptions
 from .objects import Object
 from .__pygame import pygame
 
@@ -10,6 +11,29 @@ class PeaPy:
         self.clock = pygame.time.Clock()
 
         self.__objects: dict[str, Object] = {}
+
+    def add_object(self, obj: Object):
+        if obj.name in self.__objects:
+            raise exceptions.DuplicateObjectException(obj.name)
+
+        self.__objects[obj.name] = obj
+        self.__objects[obj.name]._init(self)
+
+    def get_object(self, name: str) -> Object:
+        if name not in self.__objects:
+            raise exceptions.ObjectNotFoundException(name)
+
+        return self.__objects[name]
+
+    def get_objects(self) -> dict[str, Object]:
+        return self.__objects
+    
+    def remove_object(self, name: str):
+        if name not in self.__objects:
+            raise exceptions.ObjectNotFoundException(name)
+
+        self = self.__objects[name].quit(self, name)
+        del self.__objects[name]
 
     def update(self) -> bool:
         for event in pygame.event.get():

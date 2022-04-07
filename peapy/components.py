@@ -26,3 +26,6 @@ class Component:
         # Quit component
 
         return self.peapy
+
+    def __repr__(self):
+        return f"peapy.components.{self.__class__.__name__}()"
