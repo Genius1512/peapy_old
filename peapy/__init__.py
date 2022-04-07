@@ -1,5 +1,6 @@
 from . import components
 from . import config
+from . import keyboard
 from .logger import Logger
 from . import objects
 from .peapy import PeaPy
