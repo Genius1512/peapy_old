@@ -4,7 +4,7 @@ import setuptools
 
 setuptools.setup(
     name="peapy",
-    version="0.2.1",
+    version="0.2.2",
     author="Silvan Schmidt",
     description="A python game engine",
     install_requires=["pygame", "rich", "mouse", "keyboard"],
