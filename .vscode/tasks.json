@@ -9,12 +9,18 @@
             "windows": {
                 "command": "sandbox\\.venv\\Scripts\\activate.bat; python -m pip install ."
             },
+            "linux": {
+                "command": "source sandbox/.venv/bin/activate; python -m pip install ."
+            },
         },
         {
             "label": "format",
             "type": "shell",
             "windows": {
                 "command": "sandbox\\.venv\\Scripts\\activate.bat; python -m black ."
+            },
+            "linux": {
+                "command": "source sandbox/.venv/bin/activate; python -m black ."
             },
         },
         {
