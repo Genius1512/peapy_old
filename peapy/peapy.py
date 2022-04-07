@@ -1,10 +1,13 @@
 from . import exceptions
+from .logger import Logger
 from .objects import Object
 from .__pygame import pygame
 
 
 class PeaPy:
     def __init__(self):
+        self.logger = Logger("PeaPy")
+
         pygame.init()
         self.screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("PeaPy")
@@ -44,6 +47,8 @@ class PeaPy:
 
         for obj in self.__objects.values():
             self = obj.update(self)
+
+        self.logger.error("Updated")
 
         pygame.display.update()
         return True
