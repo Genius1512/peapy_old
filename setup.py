@@ -11,7 +11,7 @@ requirements = (
 
 setuptools.setup(
     name="peapy",
-    version="0.0.1",
+    version="0.0.3",
     author="Silvan Schmidt",
     description="A python game engine",
     install_requires=requirements,

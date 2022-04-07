@@ -2,7 +2,7 @@ import peapy
 
 
 def main():
-    game = peapy.PeaPy(peapy.config.default_config)
+    game = peapy.PeaPy()
 
     while game.update():
         pass

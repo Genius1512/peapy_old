@@ -7,6 +7,7 @@ class Object:
     """
     Object class
     """
+
     def __init__(self, name: str):
         """
         Construct an object
