@@ -5,12 +5,17 @@ from .__pygame import pygame
 
 
 class PeaPy:
-    def __init__(self):
-        self.logger = Logger("PeaPy")
+    def __init__(self, config: dict):
+        self.config = config
+        self.logger = Logger(
+            self.config["LOGGER"]["name"], self.config["LOGGER"]["default_path"]
+        )
 
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
-        pygame.display.set_caption("PeaPy")
+        self.screen = pygame.display.set_mode(
+            (config["WINDOW"]["width"], config["WINDOW"]["height"])
+        )
+        pygame.display.set_caption(config["WINDOW"]["caption"])
         self.clock = pygame.time.Clock()
 
         self.__objects: dict[str, Object] = {}
@@ -43,12 +48,10 @@ class PeaPy:
             if event.type == pygame.QUIT:
                 return False
         self.delta = self.clock.tick(60) / 1000
-        self.screen.fill((255, 255, 255))
+        self.screen.fill(self.config["WINDOW"]["background"])
 
         for obj in self.__objects.values():
             self = obj.update(self)
-
-        self.logger.error("Updated")
 
         pygame.display.update()
         return True
