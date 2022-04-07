@@ -2,7 +2,7 @@ from .colors import Color, Black
 from .component import Component
 from .interfaces import PeaPy
 from .__pygame import pygame
-from .textures import Rectangle, Texture
+from .textures import Circle, Rectangle, Texture, Image
 
 
 class Renderer(Component):
@@ -40,6 +40,22 @@ class Renderer(Component):
                 self.color.rgba,
                 self.peapy[self.obj_name]["Transform"].rect,
             )
+
+        elif type(self.texture) is Circle:
+            pygame.draw.circle(
+                self.peapy.screen,
+                self.color.rgba,
+                (
+                    self.peapy[self.obj_name]["Transform"].x
+                    + self.peapy[self.obj_name]["Transform"].height,
+                    self.peapy[self.obj_name]["Transform"].y
+                    + self.peapy[self.obj_name]["Transform"].height,
+                ),
+                self.peapy[self.obj_name]["Transform"].height,
+            )
+
+        elif type(self.texture) is Image:
+            self.texture.render(self.peapy, self.obj_name)
 
         return self.peapy
 

@@ -1,13 +1,6 @@
+from . import colors, config, keyboard, mouse, objects, sound, textures
 from .component import Component
-from .transform import Transform
-from .renderer import Renderer
-from . import config
-from . import keyboard
 from .logger import Logger
-from . import mouse
-from . import objects
-from .peapy import PeaPy
-from .peapy import print_peapy_tree
-from . import sound
-from . import textures
-from . import colors
+from .peapy import PeaPy, print_peapy_tree
+from .renderer import Renderer
+from .transform import Transform

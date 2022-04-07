@@ -1,5 +1,18 @@
 class Color:
+    """
+    PeaPy's color class
+    """
+
     def __init__(self, r: int, g: int, b: int, a: int = 255):
+        """
+        Construct a color
+
+        Args:
+            r (int): Red value
+            g (int): Green value
+            b (int): Blue value
+            a (int): Alpha value
+        """
         self.r = r
         self.g = g
         self.b = b

@@ -10,7 +10,10 @@ def main():
     game.add_object(peapy.objects.Object("player"))
     game["player"].add_component(peapy.Transform(0, 0, 50, 50, 0))
     game["player"].add_component(
-        peapy.Renderer(peapy.textures.Rectangle(), peapy.colors.Black())
+        peapy.Renderer(
+            peapy.textures.Circle(),
+            peapy.colors.Black(),
+        )
     )
 
     while game.update():
