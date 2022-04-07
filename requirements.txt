@@ -1,0 +1,4 @@
+pygame
+mouse
+keyboard
+rich
