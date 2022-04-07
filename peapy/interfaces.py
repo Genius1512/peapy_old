@@ -2,7 +2,10 @@ from . import exceptions
 from .__pygame import pygame
 from .config import Config, get_default_config
 from .logger import Logger
-from .object import Object
+
+
+class Object:
+    pass
 
 
 class PeaPy:
