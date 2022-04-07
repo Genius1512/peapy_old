@@ -1,3 +1,5 @@
+![logo](logo.png)
+
 # peapy
 
 An easy-to-use game engine for Python.
