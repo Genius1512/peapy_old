@@ -1,6 +1,7 @@
 from . import exceptions
 from . import colors
 from .component import Component
+from . import config
 from .object import Object
 from .peapy import PeaPy
 from .rectcollider import RectCollider
