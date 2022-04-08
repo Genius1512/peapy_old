@@ -1,74 +1,59 @@
 from .colors import Color, Black
-from .component import Component
-from .interfaces import PeaPy
+from . import exceptions
+import peapy
 from .__pygame import pygame
-from .textures import Circle, Rectangle, Texture, Image
+from .textures import Circle, Rectangle, Image
 
 
-class Renderer(Component):
-    """
-    Renderer class
-    """
 
-    NAME = "Component"
+class Renderer(peapy.Component):
+    def __init__(self, texture: Rectangle | Image | Circle, color: Color = Black()):
+        super().__init__()
 
-    def __init__(self, texture: Texture, color: Color = Black()):
-        """
-        Construct a renderer component
-        """
         self.texture = texture
         self.color = color
 
-    def _init(self, game: PeaPy, obj_name: str):
-        """
-        Called when creating a component
-        Don't override this
-        """
+    def init(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
         self.peapy = game
         self.obj_name = obj_name
 
-    def update(self, game: PeaPy, obj_name: str) -> PeaPy:
-        """
-        Called every frame
-        """
+        # Init component
+
+        return self.peapy
+
+    def update(self, game, obj_name: str) -> peapy.PeaPy:
         self.peapy = game
         self.obj_name = obj_name
 
-        if type(self.texture) is Rectangle:
-            pygame.draw.rect(
-                self.peapy.screen,
-                self.color.rgba,
-                self.peapy[self.obj_name]["Transform"].rect,
-            )
+        # Update component
+        if type(self.texture) == Rectangle:
+            try:
+                pygame.draw.rect(
+                    self.peapy.screen,
+                    self.color.rgba,
+                    self.peapy[self.obj_name]["Transform"].rect
+                )
+            except exceptions.ComponentNotFoundException:
+                raise exceptions.RequiredComponentNotFoundException(
+                    "Transform",
+                    self.obj_name
+                )
 
-        elif type(self.texture) is Circle:
-            pygame.draw.circle(
-                self.peapy.screen,
-                self.color.rgba,
-                (
-                    self.peapy[self.obj_name]["Transform"].x
-                    + self.peapy[self.obj_name]["Transform"].height,
-                    self.peapy[self.obj_name]["Transform"].y
-                    + self.peapy[self.obj_name]["Transform"].height,
-                ),
-                self.peapy[self.obj_name]["Transform"].height,
-            )
+        elif type(self.texture) == Circle:
+            try:
+                pygame.draw.circle(
+                    self.peapy.screen,
+                    self.color.rgba,
+                    self.peapy[self.obj_name]["Transform"].top_left,
+                    self.peapy[self.obj_name]["Transform"].height
+                )
+            except exceptions.ComponentNotFoundException:
+                raise exceptions.RequiredComponentNotFoundException(
+                    "Transform",
+                    self.obj_name
+                )
 
-        elif type(self.texture) is Image:
+        elif type(self.texture) == Image:
             self.texture.render(self.peapy, self.obj_name)
 
         return self.peapy
-
-    def quit(self, game: PeaPy, obj_name: str) -> PeaPy:
-        """
-        Called when deleting the component
-        """
-        self.peapy = game
-        self.obj_name = obj_name
-
-        # Quit component
-
-        return self.peapy
-
-    def __repr__(self):
-        return f"peapy.components.{self.__class__.__name__}()"

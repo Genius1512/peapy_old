@@ -1,116 +1,69 @@
 from .component import Component
 from . import exceptions
-from .interfaces import PeaPy
 
 
 class Object:
-    """
-    Object class
-    """
-
     def __init__(self, name: str):
-        """
-        Construct an object
-
-        Args:
-            name (str): The name of the object
-        """
         self.name = name
 
         self.__components: dict[str, Component] = {}
+        self.should_delete: list[str] = []
 
-    def _init(self, game: PeaPy):
-        """
-        Called when creating an object
-        Don't override this
-        """
+    def _init(self, game):
         self.peapy = game
 
+        try:
+            self.peapy = self.init(self.peapy)
+        except AttributeError:
+            pass
+
     def add_component(self, component: Component):
-        """
-        Add a component to the object
+        if component.__class__.__name__ in self.__components:
+            raise exceptions.DuplicateComponentException(component.__class__.__name__)
 
-        Args:
-            component (Component): The component to add
-        """
-        if component.NAME in self.__components:
-            raise exceptions.DuplicateComponentException(component.NAME)
-
-        self.__components[component.NAME] = component
-        self.__components[component.NAME]._init(self.peapy, self.name)
+        self.__components[component.__class__.__name__] = component
+        self.__components[component.__class__.__name__]._init(self, self.name)
 
     def get_component(self, name: str) -> Component:
-        """
-        Get a component by name
-
-        Args:
-            name (str): The name of the component
-
-        Returns:
-            Component: The component
-        """
         if name not in self.__components:
             raise exceptions.ComponentNotFoundException(name)
 
         return self.__components[name]
 
     def get_components(self) -> dict[str, Component]:
-        """
-        Get all components
-
-        Returns:
-            dict[str, Component]: The components
-        """
         return self.__components
 
     def remove_component(self, name: str):
-        """
-        Remove a component by name
-
-        Args:
-            name (str): The name of the component
-        """
         if name not in self.__components:
             raise exceptions.ComponentNotFoundException(name)
 
-        self.peapy = self.__components[name].quit(self.peapy, self.name)
-        del self.__components[name]
+        self.should_delete.append(name)
 
-    def update(self, game: PeaPy) -> PeaPy:
-        """
-        Called every frame
-
-        Args:
-            game (PeaPy): The parent game object
-
-        Returns:
-            PeaPy: The updated game object
-        """
+    def _update(self, game):
         self.peapy = game
+        self.should_delete = []
 
+        # Update object
         for component in self.__components.values():
-            self.peapy = component.update(self.peapy, self.name)
+            self.peapy = component._update(self.peapy, self.name)
+
+        try:
+            self.peapy = self.update(self.peapy)
+        except AttributeError:
+            pass
+
+        # Remove components marked for deletion
+        for name in self.should_delete:
+            del self.__components[name]
 
         return self.peapy
 
-    def quit(self, game: PeaPy) -> PeaPy:
-        """
-        Called when the object is destroyed
+    def tree(self):
+        for component in self.__components.values():
+            print("\t" + component.__class__.__name__)
 
-        Args:
-            game (PeaPy): The parent game object
+    def __getitem__(self, name: str):
+        return self.get_component(name)
 
-        Returns:
-            PeaPy: The updated game object
-        """
-        self.peapy = game
-
-        # Quit object
-
-        return self.peapy
-
-    def __getitem__(self, key: str) -> Component:
-        return self.get_component(key)
-
-    def __repr__(self):
-        return f"peapy.objects.{self.__class__.__name__}({self.name})"
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.name})"
