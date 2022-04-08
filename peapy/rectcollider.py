@@ -1,39 +1,32 @@
-from .component import Component
+import peapy
 from . import exceptions
-from .interfaces import PeaPy
 from shapely.geometry import Polygon
 
 
-class RectCollider(Component):
-    """
-    RectCollider class
-    """
-
-    NAME = "RectCollider"
+class RectCollider(peapy.Component):
 
     def __init__(self, x_offset=0, y_offset=0, width=None, height=None):
-        """
-        Construct a RectCollider
-        """
+        super().__init__()
+
         self.x_offset = x_offset
         self.y_offset = y_offset
         self.width = width
         self.height = height
 
-    def _init(self, game: PeaPy, obj_name: str):
-        """
-        Called when creating a component
-        Don't override this
-        """
+    def init(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
         self.peapy = game
         self.obj_name = obj_name
+
+        # Init object
+
+        return self.peapy
 
     def is_colliding(self, target: str) -> bool:
         """
         Check if this RectCollider is colliding with another RectCollider
         """
         if "RectCollider" not in self.peapy[target].get_components():
-            raise exceptions.ComponentMissingException("RectCollider")
+            raise exceptions.RequiredComponentNotFoundException("RectCollider")
 
         p1 = Polygon(
             [
@@ -54,28 +47,6 @@ class RectCollider(Component):
         )
 
         return p1.intersects(p2)
-
-    def update(self, game: PeaPy, obj_name: str) -> PeaPy:
-        """
-        Called every frame
-        """
-        self.peapy = game
-        self.obj_name = obj_name
-
-        # Update component
-
-        return self.peapy
-
-    def quit(self, game: PeaPy, obj_name: str) -> PeaPy:
-        """
-        Called when deleting the component
-        """
-        self.peapy = game
-        self.obj_name = obj_name
-
-        # Quit component
-
-        return self.peapy
 
     def __repr__(self):
         return f"peapy.components.{self.__class__.__name__}()"
