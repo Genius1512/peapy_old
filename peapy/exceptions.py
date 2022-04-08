@@ -28,3 +28,11 @@ class ComponentNotFoundException(Exception):
     """
 
     pass
+
+
+class ComponentMissingException(Exception):
+    """
+    Raised when an object is required to have a certain component, but it doesn't.
+    """
+
+    pass
