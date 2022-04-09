@@ -1,7 +1,6 @@
 import peapy
 
 
-
 class Transform(peapy.Component):
     def __init__(self):
         super().__init__()

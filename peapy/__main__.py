@@ -1,8 +1,5 @@
 import os
-from sys import platform
-
-
-print("Initiating peapy project...")
+from sys import platform, argv
 
 MAIN = """import peapy
 
@@ -19,10 +16,6 @@ if __name__ == "__main__":
 
 """
 
-MANAGE = '''from argparse import ArgumentParser, Namespace
-import os
-
-
 OBJECT_TEMPLATE = """import peapy
 
 
@@ -30,6 +23,7 @@ class {name}(peapy.Object):
     def __init__(self, name: str):
         super().__init__(name)
 
+    # Called when the object is created
     def init(self, game: peapy.PeaPy) -> peapy.PeaPy:
         self.peapy = game
 
@@ -37,8 +31,9 @@ class {name}(peapy.Object):
 
         return self.peapy
 
+    # Called every frame
     def update(self, game: peapy.PeaPy) -> peapy.PeaPy:
-        self.peapy = game
+        self.peapy = game # The parent PeaPy object
 
         # Update object
 
@@ -49,11 +44,11 @@ class {name}(peapy.Object):
 COMPONENT_TEMPLATE = """import peapy
 
 
-
 class {name}(peapy.Component):
     def __init__(self):
         super().__init__()
 
+    # Called when the component is created
     def init(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
         self.peapy = game
         self.obj_name = obj_name
@@ -62,9 +57,10 @@ class {name}(peapy.Component):
 
         return self.peapy
 
+    # Called every frame
     def update(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
-        self.peapy = game
-        self.obj_name = obj_name
+        self.peapy = game # The parent PeaPy object
+        self.obj_name = obj_name # The name of the parent object
 
         # Update component
 
@@ -72,54 +68,40 @@ class {name}(peapy.Component):
 """
 
 
-def parse_args() -> Namespace:
-    parser = ArgumentParser(description='Manage PeaPy projects')
+def main(args):
+    try:
+        if args[1] == "init":
+            print("Initializing new PeaPy project...")
+            with open("main.py", "w") as f:
+                f.write(MAIN)
+            os.mkdir("assets")
+            os.mkdir("assets/images")
+            os.mkdir("assets/sounds")
+            print("Done!")
 
-    # Args
-    parser.add_argument(
-        "action",
-        choices=["new_object", "new_component"],
-        help="Action to perform"
-    )
-    parser.add_argument(
-        "name",
-        help="Name of the object"
-    )
+        elif args[1] == "new":
+            try:
+                if args[2] == "object":
+                    try:
+                        print("Creating new object {}".format(args[3]))
+                        with open(args[3].lower() + ".py", "w") as f:
+                            f.write(OBJECT_TEMPLATE.format(name=args[3]))
+                    except IndexError:
+                        print("Please specify a name for the object")
 
-    parser.add_argument(
-        "dir",
-        default=".",
-        help="Directory to create the object in"
-    )
+                elif args[2] == "component":
+                    try:
+                        print("Creating new component {}".format(args[3]))
+                        with open(args[3].lower() + ".py", "w") as f:
+                            f.write(COMPONENT_TEMPLATE.format(name=args[3]))
+                    except IndexError:
+                        print("Please specify a name for the component")
 
-    return parser.parse_args()
-
-
-def main():
-    args = parse_args()
-
-    if args.action == "new_object":
-        template = OBJECT_TEMPLATE
-    elif args.action == "new_component":
-        template = COMPONENT_TEMPLATE
-
-    with open(os.path.join(args.dir, args.name.lower() + ".py"), "w") as f:
-        f.write(template.format(name=args.name))
+            except IndexError:
+                print("Please specify the type of component you want to create.")
+    except IndexError:
+        print("Use either init or new")
 
 
 if __name__ == "__main__":
-    main()
-
-'''
-
-with open("main.py", "w") as f:
-    f.write(MAIN)
-
-with open("manage.py", "w") as f:
-    f.write(MANAGE)
-
-os.mkdir("assets")
-os.mkdir("assets/images")
-os.mkdir("assets/sounds")
-
-print("Done.")
+    main(argv)

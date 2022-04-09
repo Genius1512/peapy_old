@@ -13,16 +13,17 @@ class Enemy(peapy.Object):
         self.size = 30
 
         # Init object
-        self.add_component(peapy.Transform(
-            random.randint(self.size, game.config.window.width - self.size),
-            self.size + 2,
-            self.size,
-            self.size
-        ))
-        self.add_component(peapy.Renderer(
-            peapy.textures.Rectangle(),
-            peapy.colors.Red()
-        ))
+        self.add_component(
+            peapy.Transform(
+                random.randint(self.size, game.config.window.width - self.size),
+                self.size + 2,
+                self.size,
+                self.size,
+            )
+        )
+        self.add_component(
+            peapy.Renderer(peapy.textures.Rectangle(), peapy.colors.Red())
+        )
         self.add_component(peapy.RectCollider())
 
         return self.peapy
@@ -41,7 +42,7 @@ class Enemy(peapy.Object):
 
         if self["Transform"].y > game.config.window.height:
             self.peapy.remove_object(self.name)
-            game.score += 1
+            self.peapy["Score"].score += 1
             peapy.sound.Sound("assets/sounds/score.wav").play()
 
         return self.peapy

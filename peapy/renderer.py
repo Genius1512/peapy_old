@@ -5,9 +5,19 @@ from .__pygame import pygame
 from .textures import Circle, Rectangle, Image
 
 
-
 class Renderer(peapy.Component):
+    """
+    PeaPy renderer component
+    """
+
     def __init__(self, texture: Rectangle | Image | Circle, color: Color = Black()):
+        """
+        Construct a new Renderer object
+
+        Args:
+            texture (Rectangle | Image | Circle): The texture to render
+            color (Color): The color of the texture
+        """
         super().__init__()
 
         self.texture = texture
@@ -31,12 +41,11 @@ class Renderer(peapy.Component):
                 pygame.draw.rect(
                     self.peapy.screen,
                     self.color.rgba,
-                    self.peapy[self.obj_name]["Transform"].rect
+                    self.peapy[self.obj_name]["Transform"].rect,
                 )
             except exceptions.ComponentNotFoundException:
                 raise exceptions.RequiredComponentNotFoundException(
-                    "Transform",
-                    self.obj_name
+                    "Transform", self.obj_name
                 )
 
         elif type(self.texture) == Circle:
@@ -45,12 +54,11 @@ class Renderer(peapy.Component):
                     self.peapy.screen,
                     self.color.rgba,
                     self.peapy[self.obj_name]["Transform"].top_left,
-                    self.peapy[self.obj_name]["Transform"].height
+                    self.peapy[self.obj_name]["Transform"].height,
                 )
             except exceptions.ComponentNotFoundException:
                 raise exceptions.RequiredComponentNotFoundException(
-                    "Transform",
-                    self.obj_name
+                    "Transform", self.obj_name
                 )
 
         elif type(self.texture) == Image:

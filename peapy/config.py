@@ -2,7 +2,17 @@ from typing import Any
 
 
 class Config:
-    def __init__(self, config: dict) -> None:
+    """
+    PeaPy Config
+    """
+
+    def __init__(self, config: dict = {}) -> None:
+        """
+        Construct a new Config object
+
+        Args:
+            config (dict): The dictionary the config is based on
+        """
         for key, value in config.items():
             if type(value) is dict:
                 self.__dict__[key] = Config(value)
@@ -28,6 +38,9 @@ class Config:
         self.__dict__[key] = value
 
     def to_string(self, tabbing: int = 0) -> str:
+        """
+        Convert the config to a string
+        """
         out = ""
         for key, value in self.__dict__.items():
             if type(value) is Config:
@@ -42,6 +55,9 @@ class Config:
 
 
 def get_default_config() -> Config:
+    """
+    Get the default config
+    """
     return Config(
         {
             "window": {

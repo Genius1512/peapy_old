@@ -6,10 +6,14 @@ def main():
     game = peapy.PeaPy()
 
     game.add_object(player.Player("player1"))
-    game["player1"].add_component(peapy.RectCollider(x_offset=0, y_offset=0, width=None, height=None))
+    game["player1"].add_component(
+        peapy.RectCollider(x_offset=0, y_offset=0, width=None, height=None)
+    )
 
     game.add_object(player.Player("player2"))
-    game["player2"].add_component(peapy.RectCollider(x_offset=0, y_offset=0, width=None, height=None))
+    game["player2"].add_component(
+        peapy.RectCollider(x_offset=0, y_offset=0, width=None, height=None)
+    )
     game["player2"]["Transform"].y = 200
 
     while game.update():
@@ -19,4 +23,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
