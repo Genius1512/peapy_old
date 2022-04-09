@@ -7,6 +7,6 @@ setuptools.setup(
     version="1.0.0",
     author="Silvan Schmidt",
     description="A python game engine",
-    install_requires=["pygame", "rich", "mouse", "keyboard", "shapely"],
+    install_requires=["pygame", "keyboard", "mouse", "shapely"],
     packages=["peapy"],
 )
