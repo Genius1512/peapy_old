@@ -1,14 +1,28 @@
 class DuplicateObjectException(Exception):
-    pass
+    """
+    Raised when an object is added to a collection that already contains it.
+    """
+
 
 class ObjectNotFoundException(Exception):
-    pass
+    """
+    Raised when an object is not found in a collection.
+    """
+
 
 class DuplicateComponentException(Exception):
-    pass
+    """
+    Raised when a component is added to an object that already contains it.
+    """
+
 
 class ComponentNotFoundException(Exception):
-    pass
+    """
+    Raised when a component is not found in an object.
+    """
+
 
 class RequiredComponentNotFoundException(Exception):
-    pass
+    """
+    Raised when a required component is not found in an object.
+    """

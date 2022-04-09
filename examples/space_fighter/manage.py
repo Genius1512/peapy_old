@@ -52,24 +52,15 @@ class {name}(peapy.Component):
 
 
 def parse_args() -> Namespace:
-    parser = ArgumentParser(description='Manage PeaPy projects')
+    parser = ArgumentParser(description="Manage PeaPy projects")
 
     # Args
     parser.add_argument(
-        "action",
-        choices=["new_object", "new_component"],
-        help="Action to perform"
+        "action", choices=["new_object", "new_component"], help="Action to perform"
     )
-    parser.add_argument(
-        "name",
-        help="Name of the object"
-    )
+    parser.add_argument("name", help="Name of the object")
 
-    parser.add_argument(
-        "dir",
-        default=".",
-        help="Directory to create the object in"
-    )
+    parser.add_argument("dir", default=".", help="Directory to create the object in")
 
     return parser.parse_args()
 
@@ -88,4 +79,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

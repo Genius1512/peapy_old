@@ -5,7 +5,17 @@ from .__pygame import pygame
 
 
 class PeaPy:
+    """
+    PeaPy object class
+    """
+
     def __init__(self, config: config.Config = config.get_default_config()):
+        """
+        Construct a new PeaPy object
+
+        Args:
+            config (Config): The configuration to use
+        """
         self.config = config
 
         self.__objects: dict[str, Object] = {}
@@ -17,16 +27,21 @@ class PeaPy:
 
         # Init pygame
         pygame.init()
-        self.screen = pygame.display.set_mode((
-            self.config.window.width,
-            self.config.window.height
-        ))
+        self.screen = pygame.display.set_mode(
+            (self.config.window.width, self.config.window.height)
+        )
         pygame.display.set_caption(self.config.window.caption)
         self.clock = pygame.time.Clock()
 
         self.should_delete: list[str] = []
 
     def add_object(self, obj: Object):
+        """
+        Add an object to the peapy object
+
+        Args:
+            obj (Object): The object to add
+        """
         if obj.name in self.__objects:
             raise exceptions.DuplicateObjectException(obj.name)
 
@@ -34,21 +49,45 @@ class PeaPy:
         self.__objects[obj.name]._init(self)
 
     def get_object(self, name: str) -> Object:
+        """
+        Get an object by name.
+
+        Args:
+            name (str): The name of the object
+        """
         if name not in self.__objects:
             raise exceptions.ObjectNotFoundException(name)
 
         return self.__objects[name]
 
     def get_objects(self) -> dict[str, Object]:
+        """
+        Get all objects.
+
+        Returns:
+            dict[str, Object]: The objects
+        """
         return self.__objects
 
     def remove_object(self, name: str):
+        """
+        Remove an object by name.
+
+        Args:
+            name (str): The name of the object
+        """
         if name not in self.__objects:
             raise exceptions.ObjectNotFoundException(name)
 
         self.should_delete.append(name)
 
     def update(self) -> bool:
+        """
+        Update the peapy object
+
+        Returns:
+            bool: True if the game should continue, False otherwise
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
@@ -70,6 +109,9 @@ class PeaPy:
         return True
 
     def tree(self):
+        """
+        Print the object tree
+        """
         for obj in self.__objects.values():
             print(obj.name)
             obj.tree()

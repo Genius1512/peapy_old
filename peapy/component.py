@@ -1,8 +1,22 @@
 class Component:
+    """
+    PeaPy component class
+    """
+
     def __init__(self):
+        """
+        Construct a new Component object
+        """
         pass
 
     def _init(self, game, object_name):
+        """
+        Called when the component is added to an object.
+
+        Args:
+            game (Game): The game object
+            object_name (str): The name of the object
+        """
         self.peapy = game
         self.object_name = object_name
 
@@ -12,6 +26,13 @@ class Component:
             pass
 
     def _update(self, game, object_name):
+        """
+        Called when the component is updated.
+
+        Args:
+            game (Game): The game object
+            object_name (str): The name of the object
+        """
         self.peapy = game
         self.object_name = object_name
 

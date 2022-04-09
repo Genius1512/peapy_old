@@ -4,8 +4,20 @@ from shapely.geometry import Polygon
 
 
 class RectCollider(peapy.Component):
+    """
+    PeaPy RectCollider component
+    """
 
     def __init__(self, x_offset=0, y_offset=0, width=None, height=None):
+        """
+        Construct a new RectCollider component
+
+        Args:
+            x_offset (int): The x offset to the transform of the parent object
+            y_offset (int): The y offset to the transform of the parent object
+            width (int): The width of the collider. When None, the width of the parent object's Transform is used
+            height (int): The height of the collider. When None, the height of the parent object's Transform is used
+        """
         super().__init__()
 
         self.x_offset = x_offset

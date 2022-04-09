@@ -6,10 +6,9 @@ class Player(peapy.Object):
         super().__init__(name)
 
         self.add_component(peapy.Transform(100, 100, 50, 50))
-        self.add_component(peapy.Renderer(
-            peapy.textures.Rectangle(),
-            peapy.colors.Black()
-        ))
+        self.add_component(
+            peapy.Renderer(peapy.textures.Rectangle(), peapy.colors.Black())
+        )
 
     def init(self, game: peapy.PeaPy) -> peapy.PeaPy:
         self.peapy = game
