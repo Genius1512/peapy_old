@@ -44,7 +44,7 @@ class Object:
             raise exceptions.DuplicateComponentException(component.__class__.__name__)
 
         self.__components[component.__class__.__name__] = component
-        self.__components[component.__class__.__name__]._init(self, self.name)
+        self.__components[component.__class__.__name__]._init(self.peapy, self.name)
 
     def get_component(self, name: str) -> Component:
         """

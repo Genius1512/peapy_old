@@ -8,7 +8,7 @@
             "name": "Python: Sandbox",
             "type": "python",
             "request": "launch",
-            "program": "sandbox/",
+            "program": "sandbox/main.py",
             "console": "externalTerminal",
             "justMyCode": true,
             "preLaunchTask": "preRun",
