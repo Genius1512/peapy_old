@@ -62,12 +62,17 @@ class Text(peapy.Component):
 
         # Update component
         text = self.__font.render(self.text, True, self.color.rgba)
-        self.peapy.screen.blit(
-            text,
-            (
-                self.peapy[self.obj_name]["Transform"].x + self.x_offset,
-                self.peapy[self.obj_name]["Transform"].y + self.y_offset,
-            ),
-        )
+        try:
+            self.peapy.screen.blit(
+                text,
+                (
+                    self.peapy[self.obj_name]["Transform"].x + self.x_offset,
+                    self.peapy[self.obj_name]["Transform"].y + self.y_offset,
+                ),
+            )
+        except peapy.exceptions.ComponentNotFoundException:
+            raise peapy.exceptions.RequiredComponentNotPresent(
+                "Text requires Transform component"
+            )
 
         return self.peapy

@@ -44,8 +44,8 @@ class Renderer(peapy.Component):
                     self.peapy[self.obj_name]["Transform"].rect,
                 )
             except exceptions.ComponentNotFoundException:
-                raise exceptions.RequiredComponentNotFoundException(
-                    "Transform", self.obj_name
+                raise exceptions.RequiredComponentNotPresent(
+                    "Renderer requires Transform component"
                 )
 
         elif type(self.texture) == Circle:
@@ -57,8 +57,8 @@ class Renderer(peapy.Component):
                     self.peapy[self.obj_name]["Transform"].height,
                 )
             except exceptions.ComponentNotFoundException:
-                raise exceptions.RequiredComponentNotFoundException(
-                    "Transform", self.obj_name
+                raise exceptions.RequiredComponentNotPresent(
+                    "Renderer requires Transform component"
                 )
 
         elif type(self.texture) == Image:

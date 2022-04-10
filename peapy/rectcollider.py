@@ -38,7 +38,9 @@ class RectCollider(peapy.Component):
         Check if this RectCollider is colliding with another RectCollider
         """
         if "RectCollider" not in self.peapy[target].get_components():
-            raise exceptions.RequiredComponentNotFoundException("RectCollider")
+            raise exceptions.RequiredComponentNotPresent(
+                "Target needs to have a collider"
+            )
 
         p1 = Polygon(
             [
