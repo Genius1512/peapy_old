@@ -109,7 +109,8 @@ class Object:
         return self.peapy
 
     def update(self, game):
-        pass
+        self.peapy = game
+        return self.peapy
 
     def tree(self):
         """

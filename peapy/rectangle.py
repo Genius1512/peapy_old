@@ -6,7 +6,7 @@ from .renderer import Renderer
 from . import textures
 
 
-class Box(Object):
+class Rectangle(Object):
     def __init__(self, name: str, x: int, y: int, width: int, height: int, color: colors.Color = colors.Black()):
         super().__init__(name)
         self.peapy = None

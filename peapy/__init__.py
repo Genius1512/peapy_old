@@ -7,4 +7,5 @@ from .renderer import Renderer
 from .text import Text
 from .__pygame import pygame
 from .transform import Transform
-from .box import Box
+from .rectangle import Rectangle
+from .circle import Circle

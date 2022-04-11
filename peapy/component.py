@@ -49,8 +49,6 @@ class Component:
         return self.peapy
 
     def update(self, game, object_name: str):
-        pass
-
         return self.peapy
 
     def __repr__(self) -> str:

@@ -3,8 +3,8 @@ import peapy
 
 def main():
     game = peapy.PeaPy()
-    game.add_object(peapy.Box(
-        "Box",
+    game.add_object(peapy.Circle(
+        "Circle",
         100,
         100,
         100,
