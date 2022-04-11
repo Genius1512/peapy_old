@@ -1,16 +1,18 @@
-from .colors import Color, Black
+from . import textures
+from . import colors
 from . import exceptions
-import peapy
+from .peapy import PeaPy
 from .__pygame import pygame
-from .textures import Circle, Rectangle, Image
+from .component import Component
 
 
-class Renderer(peapy.Component):
+class Renderer(Component):
     """
     PeaPy renderer component
     """
 
-    def __init__(self, texture: Rectangle | Image | Circle, color: Color = Black()):
+    def __init__(self, texture: textures.Rectangle | textures.Image | textures.Circle,
+                 color: colors.Color = colors.Black()):
         """
         Construct a new Renderer object
 
@@ -20,10 +22,12 @@ class Renderer(peapy.Component):
         """
         super().__init__()
 
+        self.peapy = None
+        self.obj_name = None
         self.texture = texture
         self.color = color
 
-    def init(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
+    def init(self, game: PeaPy, obj_name: str) -> PeaPy:
         self.peapy = game
         self.obj_name = obj_name
 
@@ -31,12 +35,12 @@ class Renderer(peapy.Component):
 
         return self.peapy
 
-    def update(self, game, obj_name: str) -> peapy.PeaPy:
+    def update(self, game, obj_name: str) -> PeaPy:
         self.peapy = game
         self.obj_name = obj_name
 
         # Update component
-        if type(self.texture) == Rectangle:
+        if type(self.texture) == textures.Rectangle:
             try:
                 pygame.draw.rect(
                     self.peapy.screen,
@@ -44,11 +48,11 @@ class Renderer(peapy.Component):
                     self.peapy[self.obj_name]["Transform"].rect,
                 )
             except exceptions.ComponentNotFoundException:
-                raise exceptions.RequiredComponentNotFoundException(
-                    "Transform", self.obj_name
+                raise exceptions.RequiredComponentNotPresent(
+                    "Renderer requires Transform component"
                 )
 
-        elif type(self.texture) == Circle:
+        elif type(self.texture) == textures.Circle:
             try:
                 pygame.draw.circle(
                     self.peapy.screen,
@@ -57,11 +61,11 @@ class Renderer(peapy.Component):
                     self.peapy[self.obj_name]["Transform"].height,
                 )
             except exceptions.ComponentNotFoundException:
-                raise exceptions.RequiredComponentNotFoundException(
-                    "Transform", self.obj_name
+                raise exceptions.RequiredComponentNotPresent(
+                    "Renderer requires Transform component"
                 )
 
-        elif type(self.texture) == Image:
+        elif type(self.texture) == textures.Image:
             self.texture.render(self.peapy, self.obj_name)
 
         return self.peapy

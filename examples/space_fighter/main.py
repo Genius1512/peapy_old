@@ -37,7 +37,6 @@ def main():
 
         if game.frame_count % 500 == 0:
             rand_num -= 5
-            print("Speed up!")
 
         if random.randint(0, rand_num) == 0:
             game.add_object(enemy.Enemy("Enemy" + str(game.frame_count)))

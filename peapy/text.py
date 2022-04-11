@@ -1,8 +1,11 @@
-import peapy
+from .component import Component
+from . import colors
+from . import exceptions
+from .peapy import PeaPy
 from .__pygame import pygame
 
 
-class Text(peapy.Component):
+class Text(Component):
     """
     PeaPy text component
     """
@@ -13,7 +16,7 @@ class Text(peapy.Component):
         font_size: int = 24,
         x_offset: int = 0,
         y_offset: int = 0,
-        color: peapy.colors.Color = peapy.colors.Black(),
+        color: colors.Color = colors.Black(),
     ):
         """
         Construct a new Text object
@@ -27,6 +30,7 @@ class Text(peapy.Component):
         """
         super().__init__()
 
+        self.obj_name = None
         self.text = text
         self.font_size = font_size
         self.x_offset = x_offset
@@ -47,7 +51,7 @@ class Text(peapy.Component):
         self.__font = pygame.font.SysFont("Arial", self.font_size)
 
     # Called when the component is created
-    def init(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
+    def init(self, game: PeaPy, obj_name: str) -> PeaPy:
         self.peapy = game
         self.obj_name = obj_name
 
@@ -56,18 +60,23 @@ class Text(peapy.Component):
         return self.peapy
 
     # Called every frame
-    def update(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
+    def update(self, game: PeaPy, obj_name: str) -> PeaPy:
         self.peapy = game  # The parent PeaPy object
         self.obj_name = obj_name  # The name of the parent object
 
         # Update component
         text = self.__font.render(self.text, True, self.color.rgba)
-        self.peapy.screen.blit(
-            text,
-            (
-                self.peapy[self.obj_name]["Transform"].x + self.x_offset,
-                self.peapy[self.obj_name]["Transform"].y + self.y_offset,
-            ),
-        )
+        try:
+            self.peapy.screen.blit(
+                text,
+                (
+                    self.peapy[self.obj_name]["Transform"].x + self.x_offset,
+                    self.peapy[self.obj_name]["Transform"].y + self.y_offset,
+                ),
+            )
+        except exceptions.ComponentNotFoundException:
+            raise exceptions.RequiredComponentNotPresent(
+                "Text requires Transform component"
+            )
 
         return self.peapy

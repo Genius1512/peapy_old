@@ -23,14 +23,14 @@ class Color:
         """
         Get the RGB value of the color
         """
-        return (self.r, self.g, self.b)
+        return self.r, self.g, self.b
 
     @property
     def rgba(self):
         """
         Get the RGBA value of the color
         """
-        return (self.r, self.g, self.b, self.a)
+        return self.r, self.g, self.b, self.a
 
     @property
     def hex(self):

@@ -24,7 +24,7 @@ class Enemy(peapy.Object):
         self.add_component(
             peapy.Renderer(peapy.textures.Rectangle(), peapy.colors.Red())
         )
-        self.add_component(peapy.RectCollider())
+        self.add_component(peapy.Collider(peapy.textures.Rectangle()))
 
         return self.peapy
 
@@ -34,7 +34,7 @@ class Enemy(peapy.Object):
         # Update object
         self["Transform"].y += self.peapy.delta_time * 100
 
-        if self["RectCollider"].is_colliding("Player"):
+        if self["Collider"].is_colliding("Player"):
             self.peapy.game_over = True
             peapy.sound.Sound("assets/sounds/explosion.wav").play()
             time.sleep(0.5)

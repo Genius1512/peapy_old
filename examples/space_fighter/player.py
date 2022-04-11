@@ -23,7 +23,7 @@ class player(peapy.Object):
             peapy.textures.Rectangle(),
             peapy.colors.Black()
         ))
-        self.add_component(peapy.RectCollider())
+        self.add_component(peapy.Collider(peapy.textures.Rectangle()))
 
         return self.peapy
 

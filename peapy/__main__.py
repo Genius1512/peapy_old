@@ -1,5 +1,5 @@
 import os
-from sys import platform, argv
+from sys import argv
 
 MAIN = """import peapy
 
@@ -33,7 +33,7 @@ class {name}(peapy.Object):
 
     # Called every frame
     def update(self, game: peapy.PeaPy) -> peapy.PeaPy:
-        self.peapy = game # The parent PeaPy object
+        self.peapy = game #  The parent PeaPy object
 
         # Update object
 
@@ -49,18 +49,18 @@ class {name}(peapy.Component):
         super().__init__()
 
     # Called when the component is created
-    def init(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
+    def init(self, game: peapy.PeaPy, object_name: str) -> peapy.PeaPy:
         self.peapy = game
-        self.obj_name = obj_name
+        self.object_name = object_name
 
         # Init component
 
         return self.peapy
 
     # Called every frame
-    def update(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
+    def update(self, game: peapy.PeaPy, object_name: str) -> peapy.PeaPy:
         self.peapy = game # The parent PeaPy object
-        self.obj_name = obj_name # The name of the parent object
+        self.obj_name = object_name # The name of the parent object
 
         # Update component
 

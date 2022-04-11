@@ -1,6 +1,5 @@
-from .__pygame import pygame
 from . import exceptions
-
+from .__pygame import pygame
 
 FROM_TRANSFORM = -2
 FROM_IMAGE = -1
@@ -41,8 +40,10 @@ class Image(Texture):
 
         Args:
             path (str): The path to the image file
-            width (int): The width of the image. When set to -2, the width of the parent object's Transform will be set to the width of the image. When set to -1, the width of the image will be used.
-            height (int): The height of the image. When set to -2, the height of the parent object's Transform will be set to the height of the image. When set to -1, the height of the image will be used.
+            width (int): The width of the image. When set to -2, the width of the parent object's Transform will be set
+                            to the width of the image. When set to -1, the width of the image will be used.
+            height (int): The height of the image. When set to -2, the height of the parent object's Transform will be
+                            set to the height of the image. When set to -1, the height of the image will be used.
         """
         self.path = path
         self.width = width
@@ -58,8 +59,8 @@ class Image(Texture):
             try:
                 width = game.get_object(obj_name)["Transform"].width
             except exceptions.ComponentNotFoundException:
-                raise exceptions.RequiredComponentNotFoundException(
-                    "Transform", obj_name
+                raise exceptions.RequiredComponentNotPresent(
+                    "Image requires Transform component"
                 )
         elif self.width == FROM_IMAGE:
             width = self.image.get_width()
@@ -70,8 +71,8 @@ class Image(Texture):
             try:
                 height = game.get_object(obj_name)["Transform"].height
             except exceptions.ComponentNotFoundException:
-                raise exceptions.RequiredComponentNotFoundException(
-                    "Transform", obj_name
+                raise exceptions.RequiredComponentNotPresent(
+                    "Image requires Transform component"
                 )
         elif self.height == FROM_IMAGE:
             height = self.image.get_height()
@@ -79,6 +80,11 @@ class Image(Texture):
             height = self.height
 
         image = pygame.transform.scale(self.image, (width, height))
-        game.screen.blit(
-            image, (game[obj_name]["Transform"].x, game[obj_name]["Transform"].y)
-        )
+        try:
+            game.screen.blit(
+                image, (game[obj_name]["Transform"].x, game[obj_name]["Transform"].y)
+            )
+        except exceptions.ComponentNotFoundException:
+            raise exceptions.RequiredComponentNotPresent(
+                "Image requires Transform component"
+            )

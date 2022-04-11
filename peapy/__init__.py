@@ -1,12 +1,11 @@
-from . import exceptions
-from . import colors
+from . import colors, config, exceptions, sound, textures
+from .collider import Collider
 from .component import Component
-from . import config
 from .object import Object
 from .peapy import PeaPy
-from .rectcollider import RectCollider
 from .renderer import Renderer
 from .text import Text
-from . import textures
+from .__pygame import pygame
 from .transform import Transform
-from . import sound
+from .rectangle import Rectangle
+from .circle import Circle

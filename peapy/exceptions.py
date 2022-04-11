@@ -22,7 +22,7 @@ class ComponentNotFoundException(Exception):
     """
 
 
-class RequiredComponentNotFoundException(Exception):
+class RequiredComponentNotPresent(Exception):
     """
     Raised when a required component is not found in an object.
     """
