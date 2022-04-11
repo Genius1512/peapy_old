@@ -1,7 +1,8 @@
-import peapy
+from .component import Component
+from .peapy import PeaPy
 
 
-class Transform(peapy.Component):
+class Transform(Component):
     """
     PeaPy transform component
     """
@@ -19,6 +20,7 @@ class Transform(peapy.Component):
         """
         super().__init__()
 
+        self.obj_name = None
         self.x = x
         self.y = y
         self.width = width
@@ -26,41 +28,41 @@ class Transform(peapy.Component):
         self.rotation = rotation
 
     @property
-    def rect(self) -> tuple[int]:
+    def rect(self) -> tuple[int, int, int, int]:
         """
         Get the rect of the transform
         """
         return self.x, self.y, self.width, self.height
 
     @property
-    def top_left(self) -> tuple[int]:
+    def top_left(self) -> tuple[int, int]:
         """
         Get the coords of the top left position of the transform
         """
         return self.x, self.y
 
     @property
-    def top_right(self) -> tuple[int]:
+    def top_right(self) -> tuple[int, int]:
         """
         Get the coords of the top right position of the transform
         """
         return self.x + self.width, self.y
 
     @property
-    def bottom_left(self) -> tuple[int]:
+    def bottom_left(self) -> tuple[int, int]:
         """
         Get the coords of the bottom left position of the transform
         """
         return self.x, self.y + self.height
 
     @property
-    def bottom_right(self) -> tuple[int]:
+    def bottom_right(self) -> tuple[int, int]:
         """
         Get the coords of the bottom right position of the transform
         """
         return self.x + self.width, self.y + self.height
 
-    def init(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
+    def init(self, game: PeaPy, obj_name: str) -> PeaPy:
         self.peapy = game
         self.obj_name = obj_name
 
@@ -68,7 +70,7 @@ class Transform(peapy.Component):
 
         return self.peapy
 
-    def update(self, game: peapy.PeaPy, obj_name: str) -> peapy.PeaPy:
+    def update(self, game: PeaPy, obj_name: str) -> PeaPy:
         self.peapy = game
         self.obj_name = obj_name
 

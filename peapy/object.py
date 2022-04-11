@@ -9,17 +9,18 @@ class Object:
 
     def __init__(self, name: str):
         """
-        Construct a new Object object
+        Construct a new Object
 
         Args:
             name (str): The name of the object
         """
         self.name = name
+        self.peapy = None
 
         self.__components: dict[str, Component] = {}
         self.should_delete: list[str] = []
 
-    def _init(self, game):
+    def init_(self, game):
         """
         Called when the object is added to a game.
 
@@ -33,6 +34,9 @@ class Object:
         except AttributeError:
             pass
 
+    def init(self, game):
+        pass
+
     def add_component(self, component: Component):
         """
         Add a component to the object.
@@ -44,7 +48,7 @@ class Object:
             raise exceptions.DuplicateComponentException(component.__class__.__name__)
 
         self.__components[component.__class__.__name__] = component
-        self.__components[component.__class__.__name__]._init(self.peapy, self.name)
+        self.__components[component.__class__.__name__].init_(self.peapy, self.name)
 
     def get_component(self, name: str) -> Component:
         """
@@ -79,7 +83,7 @@ class Object:
 
         self.should_delete.append(name)
 
-    def _update(self, game):
+    def update_(self, game):
         """
         Called when the object is updated.
 
@@ -91,7 +95,7 @@ class Object:
 
         # Update object
         for component in self.__components.values():
-            self.peapy = component._update(self.peapy, self.name)
+            self.peapy = component.update_(self.peapy, self.name)
 
         try:
             self.peapy = self.update(self.peapy)
@@ -103,6 +107,9 @@ class Object:
             del self.__components[name]
 
         return self.peapy
+
+    def update(self, game):
+        pass
 
     def tree(self):
         """

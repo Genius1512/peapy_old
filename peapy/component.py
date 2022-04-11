@@ -7,9 +7,10 @@ class Component:
         """
         Construct a new Component object
         """
-        pass
+        self.object_name = None
+        self.peapy = None
 
-    def _init(self, game, object_name):
+    def init_(self, game, object_name):
         """
         Called when the component is added to an object.
 
@@ -25,7 +26,10 @@ class Component:
         except AttributeError:
             pass
 
-    def _update(self, game, object_name):
+    def init(self, game, object_name: str):
+        pass
+
+    def update_(self, game, object_name):
         """
         Called when the component is updated.
 
@@ -41,6 +45,11 @@ class Component:
             self.peapy = self.update(self.peapy, self.object_name)
         except AttributeError:
             pass
+
+        return self.peapy
+
+    def update(self, game, object_name: str):
+        pass
 
         return self.peapy
 

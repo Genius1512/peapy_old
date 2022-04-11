@@ -1,6 +1,6 @@
-from . import config
-from . import exceptions
+from .config import Config, get_default_config
 from .object import Object
+from . import exceptions
 from .__pygame import pygame
 
 
@@ -9,7 +9,7 @@ class PeaPy:
     PeaPy object class
     """
 
-    def __init__(self, config: config.Config = config.get_default_config()):
+    def __init__(self, config: Config = get_default_config()):
         """
         Construct a new PeaPy object
 
@@ -46,7 +46,7 @@ class PeaPy:
             raise exceptions.DuplicateObjectException(obj.name)
 
         self.__objects[obj.name] = obj
-        self.__objects[obj.name]._init(self)
+        self.__objects[obj.name].init_(self)
 
     def get_object(self, name: str) -> Object:
         """
@@ -99,7 +99,7 @@ class PeaPy:
         self.should_delete = []
 
         for obj in self.__objects.values():
-            self = obj._update(self)
+            self = obj.update_(self)
 
         # Remove objects marked for deletion
         for name in self.should_delete:

@@ -1,6 +1,5 @@
-from .__pygame import pygame
 from . import exceptions
-
+from .__pygame import pygame
 
 FROM_TRANSFORM = -2
 FROM_IMAGE = -1
@@ -41,8 +40,10 @@ class Image(Texture):
 
         Args:
             path (str): The path to the image file
-            width (int): The width of the image. When set to -2, the width of the parent object's Transform will be set to the width of the image. When set to -1, the width of the image will be used.
-            height (int): The height of the image. When set to -2, the height of the parent object's Transform will be set to the height of the image. When set to -1, the height of the image will be used.
+            width (int): The width of the image. When set to -2, the width of the parent object's Transform will be set
+                            to the width of the image. When set to -1, the width of the image will be used.
+            height (int): The height of the image. When set to -2, the height of the parent object's Transform will be
+                            set to the height of the image. When set to -1, the height of the image will be used.
         """
         self.path = path
         self.width = width
