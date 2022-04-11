@@ -23,7 +23,7 @@ class Player(peapy.Object):
         ))
         self.add_component(peapy.Renderer(
             peapy.textures.Image(
-                "assets\\images\\player.png",
+                "assets/images/player.png",
                 -2,
                 -2
             ),

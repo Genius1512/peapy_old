@@ -1,6 +1,8 @@
 import peapy
 import random
+import keyboard
 
+import bullet
 import enemy
 import player
 
@@ -10,6 +12,12 @@ def main():
     config.window.width = 400
 
     game = peapy.PeaPy(config=config)
+
+    game.add_object(peapy.Object("Background"))
+    game["Background"].add_component(peapy.Transform(0, 0, 0, 0))
+    game["Background"].add_component(peapy.Renderer(
+        peapy.textures.Image("assets/images/background.png"),
+    ))
 
     game.add_object(player.Player("Player"))
     game.add_object(enemy.Enemy("Enemy"))
@@ -27,6 +35,8 @@ def main():
     game.game_over = False
     rand_num = 75
 
+    bullet_cooldown = 1
+
     while game.update():
         if game.game_over:
             break
@@ -34,6 +44,14 @@ def main():
         if rand_num == 5:
             game.won = True
             break
+
+        bullet_cooldown -= game.delta_time
+
+        if keyboard.is_pressed("space") and bullet_cooldown <= 0:
+            game.add_object(bullet.Bullet("Bullet" + str(game.frame_count),
+                                          game["Player"]["Transform"].x + game["Player"]["Transform"].width / 2
+                                          ))
+            bullet_cooldown = 1
 
         if game.frame_count % 500 == 0:
             rand_num -= 5

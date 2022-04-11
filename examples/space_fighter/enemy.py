@@ -25,7 +25,7 @@ class Enemy(peapy.Object):
         )
         self.add_component(
             peapy.Renderer(peapy.textures.Image(
-                "assets\\images\\enemy.png",
+                "assets/images/enemy.png",
                 -2,
                 -2
             ), peapy.colors.Red())
@@ -48,7 +48,6 @@ class Enemy(peapy.Object):
 
         if self["Transform"].y > game.config.window.height:
             self.peapy.remove_object(self.name)
-            self.peapy["Score"].score += 1
             peapy.sound.Sound("assets/sounds/score.wav").play()
 
         return self.peapy
