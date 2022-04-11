@@ -6,6 +6,7 @@ import time
 class Enemy(peapy.Object):
     def __init__(self, name: str):
         super().__init__(name)
+        self.size = None
 
     def init(self, game: peapy.PeaPy) -> peapy.PeaPy:
         self.peapy = game
@@ -19,10 +20,15 @@ class Enemy(peapy.Object):
                 self.size + 2,
                 self.size,
                 self.size,
+                180
             )
         )
         self.add_component(
-            peapy.Renderer(peapy.textures.Rectangle(), peapy.colors.Red())
+            peapy.Renderer(peapy.textures.Image(
+                "assets\\images\\enemy.png",
+                -2,
+                -2
+            ), peapy.colors.Red())
         )
         self.add_component(peapy.Collider(peapy.textures.Rectangle()))
 

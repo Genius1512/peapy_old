@@ -11,7 +11,7 @@ def main():
 
     game = peapy.PeaPy(config=config)
 
-    game.add_object(player.player("Player"))
+    game.add_object(player.Player("Player"))
     game.add_object(enemy.Enemy("Enemy"))
 
     game.add_object(

@@ -80,6 +80,7 @@ class Image(Texture):
             height = self.height
 
         image = pygame.transform.scale(self.image, (width, height))
+        image = pygame.transform.rotate(image, game.get_object(obj_name)["Transform"].rotation)
         try:
             game.screen.blit(
                 image, (game[obj_name]["Transform"].x, game[obj_name]["Transform"].y)

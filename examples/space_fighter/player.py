@@ -2,9 +2,11 @@ import peapy
 import keyboard
 
 
-class player(peapy.Object):
+class Player(peapy.Object):
     def __init__(self, name: str):
         super().__init__(name)
+        self.vel = None
+        self.size = None
 
     def init(self, game: peapy.PeaPy) -> peapy.PeaPy:
         self.peapy = game
@@ -20,7 +22,11 @@ class player(peapy.Object):
             self.size
         ))
         self.add_component(peapy.Renderer(
-            peapy.textures.Rectangle(),
+            peapy.textures.Image(
+                "assets\\images\\player.png",
+                -2,
+                -2
+            ),
             peapy.colors.Black()
         ))
         self.add_component(peapy.Collider(peapy.textures.Rectangle()))
@@ -33,7 +39,8 @@ class player(peapy.Object):
         # Update object
         if keyboard.is_pressed('a') and not self["Transform"].x <= 0:
             self["Transform"].x -= game.delta_time * self.vel
-        if keyboard.is_pressed('d') and not self["Transform"].x + self["Transform"].width >= self.peapy.config.window.width:
+        if keyboard.is_pressed('d') and not self["Transform"].x + self["Transform"].width >= \
+                self.peapy.config.window.width:
             self["Transform"].x += game.delta_time * self.vel
 
         return self.peapy
